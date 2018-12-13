@@ -100,5 +100,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Game\Game.csproj">
+      <Project>{6def3314-ee04-44f7-bb22-dc20e329d5f8}</Project>
+      <Name>Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TCPConnection\TCPConnection.csproj">
+      <Project>{fd2f6dc1-26c8-44a2-93fa-78fd680b8785}</Project>
+      <Name>TCPConnection</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

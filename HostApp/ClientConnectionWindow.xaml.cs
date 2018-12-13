@@ -74,5 +74,10 @@ namespace HostApp
             _players.Remove(id);
             PrintNames();
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _server.Disconnect();
+        }
     }
 }
