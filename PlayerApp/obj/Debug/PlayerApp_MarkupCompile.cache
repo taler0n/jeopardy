@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\Downloads\Work\Jeopardy\PlayerApp\App.xaml
-2-378623675
+4-1739339017
 
-6-337759743
+8-1639528685
 151084623623
-HostConnectionWindow.xaml;MainWindow.xaml;
+HostConnectionWindow.xaml;MainWindow.xaml;MakeBetWindow.xaml;SendAnswerWindow.xaml;
 
 False
 

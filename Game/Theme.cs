@@ -12,45 +12,63 @@ namespace Game
         private const int _defaultQuestionValueStep = 100;
         public const int DefaultSize = 5;
 
-        public string Name { get; }
-        private Question[] _questions { get; set; }
-        private int[] _questionValues { get; }
+        public string Name { get; set; }
+        public Question[] Questions { get; set; }
+        public int[] QuestionValues { get; set; }
 
-        public Theme(string name, int pointMultiplier)
+        public Theme()
         {
-            Name = name;
-            _questions = new Question[DefaultSize];
-            _questionValues = new int[DefaultSize];
+            Name = String.Empty;
+            Questions = new Question[DefaultSize];
+            QuestionValues = new int[DefaultSize];
+
+            int currentValue = _defaultFirstQuestionValue;
+
+            for (int i = 0; i < DefaultSize; i++)
+            {
+                QuestionValues[i] = currentValue;
+                currentValue += _defaultQuestionValueStep;
+            }
+        }
+
+        public void SetMultiplier(int pointMultiplier)
+        {
             int currentValue = _defaultFirstQuestionValue * pointMultiplier;
 
             for (int i = 0; i < DefaultSize; i++)
             {
-                _questionValues[i] = currentValue;
+                QuestionValues[i] = currentValue;
                 currentValue += _defaultQuestionValueStep * pointMultiplier;
             }
-
-           
         }
 
         public Question this[int index]
         {
-            get { return _questions[index]; }
-            set { _questions[index] = value; }
+            get { return Questions[index]; }
+            set { Questions[index] = value; }
         }
 
-        public int GetValue(int index)
+        public int GetQuestionValue(int index)
         {
-            return _questionValues[index];
+            return QuestionValues[index];
         }
 
         public bool IsReady()
         {
-            return CollectionManager.IsReady(_questions);
-        }
+            if (Name != String.Empty)
+            {
+                foreach (var item in Questions)
+                {
+                    if (item == null)
+                    {
+                        return false;
+                    }
+                }
 
-        public void Swap(int index1, int index2)
-        {
-            CollectionManager.Swap(_questions, index1, index2);
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -14,14 +14,16 @@ namespace TCPConnection
         private static TcpListener _listener;
         private Dictionary<string, ClientObject> clients = new Dictionary<string, ClientObject>();
         private Action<string, string> _newNameManagement;
-        private Action<string> _signalManagement;
         private Action<string> _removeNameManagement;
+        private Action<string> _signalManagement;
+        private Action<string, string> _messageManagement;
 
-        public Server(Action<string, string> newPlayerNameManagement, Action<string> answerSignalManagement, Action<string> removePlayerNameManagement)
+        public Server(Action<string, string> newPlayerNameManagement, Action<string> removePlayerNameManagement)
         {
             _newNameManagement = newPlayerNameManagement;
-            _signalManagement = answerSignalManagement;
             _removeNameManagement = removePlayerNameManagement;
+            _signalManagement = null;
+            _messageManagement = null;
         }
 
         public void AddConnection(ClientObject clientObject, string id)
@@ -33,6 +35,16 @@ namespace TCPConnection
         {
             clients.Remove(id);
             _removeNameManagement(id);
+        }
+
+        public void SetSignalManager(Action<string> answerSignalManagement)
+        {
+            _signalManagement = answerSignalManagement;
+        }
+
+        public void SetMessageManager(Action<string, string> messageManagement)
+        {
+            _messageManagement = messageManagement;
         }
 
         public void Listen()
@@ -69,7 +81,7 @@ namespace TCPConnection
                 }
             }
 
-            throw new InvalidOperationException("No local network");
+            throw new InvalidOperationException("Нет сети");
         }
 
         public void ManageNewName(string name, string id)
@@ -79,7 +91,18 @@ namespace TCPConnection
 
         public void ManageSignal(string id)
         {
-            _signalManagement(id);
+            if (_signalManagement != null)
+            {
+                _signalManagement(id);
+            }
+        }
+
+        public void ManageMessage(string id, string message)
+        {
+            if (_messageManagement != null)
+            {
+                _messageManagement(id, message);
+            }
         }
 
         public void BroadcastMessage(string message)
@@ -90,6 +113,12 @@ namespace TCPConnection
             {
                 client.Value.Stream.Write(data, 0, data.Length);
             }
+        }
+
+        public void SendMessage(string message, string id)
+        {
+            byte[] data = Encoding.Unicode.GetBytes(message);
+            clients[id].Stream.Write(data, 0, data.Length);
         }
 
         public void Disconnect()

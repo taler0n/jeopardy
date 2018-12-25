@@ -21,14 +21,14 @@ namespace PlayerApp
     /// </summary>
     public partial class HostConnectionWindow : Window
     {
-        private const string _ipPlaceholder = "Enter IP here...";
-        private const string _namePlaceholder = "Enter your name here...";
-        private const string _defaultSignal = "!";
-
-        private static TcpClient client;
-        private static NetworkStream stream;
+        private const string _ipPlaceholder = "Введите IP адрес...";
+        private const string _namePlaceholder = "Введите имя...";
         private const int port = 8888;
 
+        public TcpClient Client;
+        public NetworkStream Stream;
+        public string UserName;
+        
         public HostConnectionWindow()
         {
             InitializeComponent();
@@ -71,51 +71,29 @@ namespace PlayerApp
         {
             if (!String.IsNullOrWhiteSpace(IPInput.Text) && !String.IsNullOrWhiteSpace(NameInput.Text))
             {
-                string userName = NameInput.Text;
+                UserName = NameInput.Text;
                 string host = IPInput.Text;
-                client = new TcpClient();
+                Client = new TcpClient();
 
                 try
                 {
-                    client.Connect(host, port);
-                    stream = client.GetStream();
-                    byte[] data = Encoding.Unicode.GetBytes(userName);
-                    stream.Write(data, 0, data.Length);
-
-                    //Thread receiveThread = new Thread(new ThreadStart(ReceiveMessage));
-                    //receiveThread.Start();
+                    Client.Connect(host, port);
+                    Stream = Client.GetStream();
+                    byte[] data = Encoding.Unicode.GetBytes(UserName);
+                    Stream.Write(data, 0, data.Length);
+                    Close();
                 }
                 finally
-                { 
-
-                }
+                { }
             }
         }
         
         private void Disconnect()
         {
-            if (stream != null)
-                stream.Close();
-            if (client != null)
-                client.Close();
-        }
-
-        private void BuzzButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (stream != null && client != null)
-            {
-                byte[] data = Encoding.Unicode.GetBytes(_defaultSignal);
-                stream.Write(data, 0, data.Length);
-            }
-            else
-            {
-                MessageBox.Show("No connection");
-            }
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Disconnect();
+            if (Stream != null)
+                Stream.Close();
+            if (Client != null)
+                Client.Close();
         }
     }
 }

@@ -7,13 +7,11 @@ D:\Downloads\Work\Jeopardy\HostApp\bin\Debug\Game.pdb
 D:\Downloads\Work\Jeopardy\HostApp\bin\Debug\TCPConnection.pdb
 D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\HostApp.csprojAssemblyReference.cache
 D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\ClientConnectionWindow.g.cs
-D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\MainWindow.g.cs
 D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\App.g.cs
 D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\HostApp_MarkupCompile.cache
 D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\HostApp_MarkupCompile.lref
 D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\App.baml
 D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\ClientConnectionWindow.baml
-D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\MainWindow.baml
 D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\HostApp.g.resources
 D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\HostApp.Properties.Resources.resources
 D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\HostApp.csproj.GenerateResource.cache
@@ -21,3 +19,13 @@ D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\HostApp.csproj.CoreCompileInputs.ca
 D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\HostApp.csproj.CopyComplete
 D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\HostApp.exe
 D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\HostApp.pdb
+D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\FinalQuestionWindow.g.cs
+D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\FinalRoundWindow.g.cs
+D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\GameWindow.g.cs
+D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\LoadGameWindow.g.cs
+D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\QuestionWindow.g.cs
+D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\FinalQuestionWindow.baml
+D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\FinalRoundWindow.baml
+D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\GameWindow.baml
+D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\LoadGameWindow.baml
+D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\QuestionWindow.baml

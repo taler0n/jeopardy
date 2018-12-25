@@ -1,0 +1,38 @@
+﻿<Window x:Class="HostApp.GameWindow"
+        Background="DarkSlateGray"
+        ResizeMode="NoResize"
+        WindowState="Maximized"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HostApp"
+        mc:Ignorable="d"
+        Title="Своя Игра" Height="450" Width="800" Icon="icon.ico">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="QuestionGrid" Grid.Row="0"/>
+        <Grid x:Name="PlayersGrid" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+        </Grid>
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="SaveChangesButton" Grid.Column="0" Style="{StaticResource YellowContentStyle}" Content="Сохранить изменения" Click="SaveChangesButton_Click" Visibility="Hidden"/>
+            <Button x:Name="SkipRoundButton" Grid.Column="1" Style="{StaticResource YellowContentStyle}" Content="Пропустить раунд" Click="SkipRoundButton_Click" Visibility="Hidden"/>
+            <Button x:Name="EditButton" Grid.Column="2" Style="{StaticResource YellowContentStyle}" Content="Редактировать" Click="EditButton_Click"/>
+        </Grid>
+    </Grid>
+</Window>

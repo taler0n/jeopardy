@@ -21,3 +21,7 @@ D:\Downloads\Work\Jeopardy\PlayerApp\obj\Debug\PlayerApp.csproj.CoreCompileInput
 D:\Downloads\Work\Jeopardy\PlayerApp\obj\Debug\PlayerApp.csproj.CopyComplete
 D:\Downloads\Work\Jeopardy\PlayerApp\obj\Debug\PlayerApp.exe
 D:\Downloads\Work\Jeopardy\PlayerApp\obj\Debug\PlayerApp.pdb
+D:\Downloads\Work\Jeopardy\PlayerApp\obj\Debug\MakeBetWindow.g.cs
+D:\Downloads\Work\Jeopardy\PlayerApp\obj\Debug\SendAnswerWindow.g.cs
+D:\Downloads\Work\Jeopardy\PlayerApp\obj\Debug\MakeBetWindow.baml
+D:\Downloads\Work\Jeopardy\PlayerApp\obj\Debug\SendAnswerWindow.baml
