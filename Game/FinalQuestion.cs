@@ -8,9 +8,14 @@ namespace Game
 {
     public class FinalQuestion : Question
     {
-        public string Name { get; }
+        public string Name { get; set; }
 
-        public FinalQuestion(string name, string question, string answer, MediaContent media) : base(question, answer, media)
+        public FinalQuestion()
+        {
+
+        }
+
+        public FinalQuestion(string name, string question, string answer) : base(question, answer)
         {
             Name = name;
         }

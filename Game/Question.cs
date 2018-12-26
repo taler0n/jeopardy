@@ -8,17 +8,18 @@ namespace Game
 {
     public class Question
     {
-        public string QuestionText { get; }
-        public string AnswerText { get; }
-        public bool IsAvailable { get; set; }
-        public MediaContent Media { get; }
+        public string QuestionText { get; set; }
+        public string AnswerText { get; set; }
 
-        public Question(string question, string answer, MediaContent media)
+        public Question()
+        {
+
+        }
+
+        public Question(string question, string answer)
         {
             QuestionText = question;
             AnswerText = answer;
-            IsAvailable = true;
-            Media = media;
         }
     }
 }

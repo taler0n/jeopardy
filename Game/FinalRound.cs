@@ -10,27 +10,30 @@ namespace Game
     {
         public const int DefaultSize = 7;
 
-        private FinalQuestion[] _questions { get; set; }
+        public FinalQuestion[] Questions { get; set; }
 
         public FinalRound()
         {
-            _questions = new FinalQuestion[DefaultSize];
+            Questions = new FinalQuestion[DefaultSize];
         }
 
         public FinalQuestion this[int index]
         {
-            get { return _questions[index]; }
-            set { _questions[index] = value; }
+            get { return Questions[index]; }
+            set { Questions[index] = value; }
         }
 
         public bool IsReady()
         {
-            return CollectionManager.IsReady(_questions);
-        }
+            foreach (var item in Questions)
+            {
+                if (item == null)
+                {
+                    return false;
+                }
+            }
 
-        public void Swap(int index1, int index2)
-        {
-            CollectionManager.Swap(_questions, index1, index2);
+            return true;
         }
     }
 }

@@ -25,17 +25,22 @@ namespace HostApp
         private Server _server;
         private Thread _listenThread;
         private Dictionary<string, Player> _players;
+        private GameObject _game;
+        private bool _gameStarted;
 
-        public ClientConnectionWindow()
+        public ClientConnectionWindow(GameObject newGame)
         {
             InitializeComponent();
+            PlayersList.DisplayMemberPath = "Value";
+            _players = new Dictionary<string, Player>();
+            _game = newGame;
+            _gameStarted = false;
+
             var newNameHandler = new Action<string, string>(AddPlayer);
-            var buzzInHandler = new Action<string>(BuzzIn);
             var removeNameHandler = new Action<string>(RemoveName);
-            _server = new Server(newNameHandler, buzzInHandler, removeNameHandler);
+            _server = new Server(newNameHandler, removeNameHandler);
             _listenThread = new Thread(new ThreadStart(_server.Listen));
             IPOutput.Content = _server.GetLocalIP();
-            _players = new Dictionary<string, Player>();
 
             try
             {
@@ -50,29 +55,70 @@ namespace HostApp
 
         private void AddPlayer(string name, string id)
         {
-            _players[id] = new Player(name);
-            PrintNames();
-        }
-
-        private void PrintNames()
-        {
-            NamesOutput.Clear();
-
-            foreach (var player in _players)
+            if (_gameStarted)
             {
-                NamesOutput.Text += String.Format("{0}\n", player.Value.Name);
+                _server.RemoveConnection(id);
+            }
+            else
+            {
+                _players[id] = new Player(name);
+                PlayersList.Dispatcher.Invoke(new Action<KeyValuePair<string, string>>(AddNameToList), new KeyValuePair<string, string>(id, name));
             }
         }
 
-        private void BuzzIn(string id)
+        private void AddNameToList(KeyValuePair<string, string> pair)
         {
-            BuzzerLabel.Content = String.Format("!!{0}!!", _players[id].Name);
+            PlayersList.Items.Add(pair);
         }
 
         private void RemoveName(string id)
         {
-            _players.Remove(id);
-            PrintNames();
+            if (_players.ContainsKey(id))
+            {
+                PlayersList.Dispatcher.Invoke(new Action<KeyValuePair<string, string>>(RemoveNameFromList), new KeyValuePair<string, string>(id, _players[id].Name));
+                _players.Remove(id);
+            }
+
+        }
+
+        private void RemoveNameFromList(KeyValuePair<string, string> pair)
+        {
+            PlayersList.Items.Remove(pair);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _server.Disconnect();
+        }
+
+        private void KickPlayerButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlayersList.SelectedItem != null)
+            {
+                var item = PlayersList.SelectedItem;
+                string id = ((KeyValuePair<string, string>)item).Key;
+                _server.SendMessage(MessageSigns.DisconnectMessage, id);
+                _server.RemoveConnection(id);
+            }
+        }
+
+        private void ContinueButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_players.Count == GameObject.DefaultNumberOfPlayers)
+            {
+                _gameStarted = true;
+                Visibility = Visibility.Hidden;
+
+                foreach (var round in _game.Rounds)
+                {
+                    var roundWindow = new GameWindow(_server, round, _players);
+                    roundWindow.ShowDialog();
+                }
+
+                var final = new FinalRoundWindow(_server, _game.Final, _players);
+                final.ShowDialog();
+                Close();
+            }
         }
     }
 }

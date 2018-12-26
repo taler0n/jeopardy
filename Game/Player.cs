@@ -8,6 +8,8 @@ namespace Game
 {
     public class Player
     {
+        public const int MaxNameLength = 12;
+
         public string Name { get; }
         public int Score { get; set; }
 
@@ -15,6 +17,11 @@ namespace Game
         {
             Name = name;
             Score = 0;
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

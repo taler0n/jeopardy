@@ -40,9 +40,23 @@ namespace TCPConnection
                     {
                         message = GetMessage();
 
-                        if (message.Length > 0)
+                        if (message == MessageSigns.DisconnectMessage)
+                        {
+                            break;
+                        }
+                        else if (message == MessageSigns.BuzzMessage)
                         {
                             _server.ManageSignal(Id);
+                        }
+                        else if (message.Length > MessageSigns.SignLength)
+                        {
+                            string sign = message.Substring(0, MessageSigns.SignLength);
+
+                            if (sign == MessageSigns.AnswerMessage)
+                            {
+                                message = message.Substring(MessageSigns.SignLength);
+                                _server.ManageMessage(Id, message);
+                            }
                         }
                     }
                     catch
@@ -51,13 +65,8 @@ namespace TCPConnection
                     }
                 }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
             finally
             {
-                _server.RemoveConnection(this.Id);
                 Close();
             }
         }
@@ -79,6 +88,7 @@ namespace TCPConnection
         
         public void Close()
         {
+            _server.RemoveConnection(Id);
             if (Stream != null)
                 Stream.Close();
             if (_client != null)

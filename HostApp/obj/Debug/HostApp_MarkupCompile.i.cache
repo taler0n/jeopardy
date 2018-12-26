@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-F:\инфа\3 курс\1sem\Jeopardy\HostApp\obj\Debug\
+D:\Downloads\Work\Jeopardy\HostApp\obj\Debug\
 HostApp
 none
 false
 DEBUG;TRACE
-F:\инфа\3 курс\1sem\Jeopardy\HostApp\App.xaml
-2-1608402896
+D:\Downloads\Work\Jeopardy\HostApp\App.xaml
+6-337221139
 
-101707704573
-15-820667691
-ClientConnectionWindow.xaml;MainWindow.xaml;
+14-256388923
+151084623623
+ClientConnectionWindow.xaml;FinalQuestionWindow.xaml;FinalRoundWindow.xaml;GameWindow.xaml;LoadGameWindow.xaml;QuestionWindow.xaml;
 
-True
+False
 

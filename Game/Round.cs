@@ -10,27 +10,30 @@ namespace Game
     {
         public const int DefaultSize = 6;
 
-        private Theme[] _themes { get; set; }
+        public Theme[] Themes { get; set; }
 
         public Round()
         {
-            _themes = new Theme[DefaultSize];
+            Themes = new Theme[DefaultSize];
         }
 
         public Theme this[int index]
         {
-            get { return _themes[index]; }
-            set { _themes[index] = value; }
+            get { return Themes[index]; }
+            set { Themes[index] = value; }
         }
 
         public bool IsReady()
         {
-            return CollectionManager.IsReady(_themes);
-        }
+            foreach (var item in Themes)
+            {
+                if (item == null || !item.IsReady())
+                {
+                    return false;
+                }
+            }
 
-        public void Swap(int index1, int index2)
-        {
-            CollectionManager.Swap(_themes, index1, index2);
+            return true;
         }
     }
 }

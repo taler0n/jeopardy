@@ -1,0 +1,6 @@
+D:\Downloads\Work\Jeopardy\Game\bin\Debug\Game.dll
+D:\Downloads\Work\Jeopardy\Game\bin\Debug\Game.pdb
+D:\Downloads\Work\Jeopardy\Game\obj\Debug\Game.csproj.CoreCompileInputs.cache
+D:\Downloads\Work\Jeopardy\Game\obj\Debug\Game.dll
+D:\Downloads\Work\Jeopardy\Game\obj\Debug\Game.pdb
+D:\Downloads\Work\Jeopardy\Game\obj\Debug\Game.csprojAssemblyReference.cache

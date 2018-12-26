@@ -14,14 +14,16 @@ namespace TCPConnection
         private static TcpListener _listener;
         private Dictionary<string, ClientObject> clients = new Dictionary<string, ClientObject>();
         private Action<string, string> _newNameManagement;
-        private Action<string> _signalManagement;
         private Action<string> _removeNameManagement;
+        private Action<string> _signalManagement;
+        private Action<string, string> _messageManagement;
 
-        public Server(Action<string, string> newPlayerNameManagement, Action<string> answerSignalManagement, Action<string> removePlayerNameManagement)
+        public Server(Action<string, string> newPlayerNameManagement, Action<string> removePlayerNameManagement)
         {
             _newNameManagement = newPlayerNameManagement;
-            _signalManagement = answerSignalManagement;
             _removeNameManagement = removePlayerNameManagement;
+            _signalManagement = null;
+            _messageManagement = null;
         }
 
         public void AddConnection(ClientObject clientObject, string id)
@@ -35,8 +37,19 @@ namespace TCPConnection
             _removeNameManagement(id);
         }
 
+        public void SetSignalManager(Action<string> answerSignalManagement)
+        {
+            _signalManagement = answerSignalManagement;
+        }
+
+        public void SetMessageManager(Action<string, string> messageManagement)
+        {
+            _messageManagement = messageManagement;
+        }
+
         public void Listen()
         {
+            List<Thread> threads = new List<Thread>();
             try
             {
                 _listener = new TcpListener(IPAddress.Any, 8888);
@@ -47,12 +60,17 @@ namespace TCPConnection
                     TcpClient tcpClient = _listener.AcceptTcpClient();
                     ClientObject clientObject = new ClientObject(tcpClient, this);
                     Thread clientThread = new Thread(new ThreadStart(clientObject.Process));
+                    threads.Add(clientThread);
                     clientThread.Start();
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine(ex.Message);
+                foreach (var thread in threads)
+                {
+                    thread.Abort();
+                }
+
                 Disconnect();
             }
         }
@@ -69,7 +87,7 @@ namespace TCPConnection
                 }
             }
 
-            throw new InvalidOperationException("No local network");
+            throw new InvalidOperationException("Нет сети");
         }
 
         public void ManageNewName(string name, string id)
@@ -79,7 +97,18 @@ namespace TCPConnection
 
         public void ManageSignal(string id)
         {
-            _signalManagement(id);
+            if (_signalManagement != null)
+            {
+                _signalManagement(id);
+            }
+        }
+
+        public void ManageMessage(string id, string message)
+        {
+            if (_messageManagement != null)
+            {
+                _messageManagement(id, message);
+            }
         }
 
         public void BroadcastMessage(string message)
@@ -92,14 +121,24 @@ namespace TCPConnection
             }
         }
 
+        public void SendMessage(string message, string id)
+        {
+            byte[] data = Encoding.Unicode.GetBytes(message);
+            clients[id].Stream.Write(data, 0, data.Length);
+        }
+
         public void Disconnect()
         {
             _listener.Stop();
 
-            foreach (var client in clients)
+            try
             {
-                client.Value.Close();
+                foreach (var client in clients)
+                {
+                    client.Value.Close();
+                }
             }
+            catch { }
         }
     }
 }

@@ -7,11 +7,13 @@
         <Style x:Key="YellowContentStyle">
             <Setter Property="Control.Background" Value="Transparent"/>
             <Setter Property="Control.Foreground" Value="Yellow"/>
-            <Setter Property="Control.FontSize" Value="30"/>
+            <Setter Property="Control.FontSize" Value="20"/>
             <Setter Property="Control.FontFamily" Value="Tahoma"/>
             <Setter Property="Control.FontWeight" Value="DemiBold"/>
             <Setter Property="Control.BorderBrush" Value="Yellow"/>
             <Setter Property="Control.BorderThickness" Value="5"/>
+            <Setter Property="Control.VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Control.HorizontalContentAlignment" Value="Center"/>
         </Style>
     </Application.Resources>
 </Application>

@@ -1,0 +1,6 @@
+D:\Downloads\Work\Jeopardy\TCPConnection\bin\Debug\TCPConnection.dll
+D:\Downloads\Work\Jeopardy\TCPConnection\bin\Debug\TCPConnection.pdb
+D:\Downloads\Work\Jeopardy\TCPConnection\obj\Debug\TCPConnection.csproj.CoreCompileInputs.cache
+D:\Downloads\Work\Jeopardy\TCPConnection\obj\Debug\TCPConnection.dll
+D:\Downloads\Work\Jeopardy\TCPConnection\obj\Debug\TCPConnection.pdb
+D:\Downloads\Work\Jeopardy\TCPConnection\obj\Debug\TCPConnection.csprojAssemblyReference.cache
