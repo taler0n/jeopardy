@@ -26,6 +26,7 @@ namespace PlayerApp
         private const string _betErrorMessage = "Введите число";
         private const string _betBelowZero = "Ставка должна быть неотрицательным числом";
         private const string _betTooBig = "Ставка не может превышать счет";
+        private const int _maxBetLength = 10;
 
         public int Bet;
 

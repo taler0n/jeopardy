@@ -8,6 +8,8 @@ namespace Game
 {
     public class Player
     {
+        public const int MaxNameLength = 12;
+
         public string Name { get; }
         public int Score { get; set; }
 

@@ -30,6 +30,7 @@ namespace PlayerApp
 
         private TcpClient _client;
         private NetworkStream _stream;
+        private Thread _receiveThread;
         private Player _player;
         private bool _finalStarted;
         private int _bet;
@@ -44,6 +45,8 @@ namespace PlayerApp
 
         private void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
+            SendMessage(MessageSigns.DisconnectMessage);
+            Disconnect();
             var connectionWindow = new HostConnectionWindow();
             Visibility = Visibility.Hidden;
             connectionWindow.ShowDialog();
@@ -56,8 +59,14 @@ namespace PlayerApp
                 NameLabel.Content = _player.Name;
                 ScoreLabel.Content = _player.Score;
                 MessageTextbox.Text = _questionPlaceholder;
-                Thread receiveThread = new Thread(new ThreadStart(ReceiveMessage));
-                receiveThread.Start();
+
+                if (_receiveThread != null)
+                {
+                    _receiveThread.Abort();
+                }
+
+                _receiveThread = new Thread(new ThreadStart(ReceiveMessage));
+                _receiveThread.Start();
             }
             else
             {
@@ -89,7 +98,7 @@ namespace PlayerApp
                         ProcessMessage(code, message);
                     }
                 }
-                catch (Exception e)
+                catch
                 {
                     MessageTextbox.Dispatcher.Invoke(new Action<string>(ChangeMessageBox), _noConnectionMessage);
                     Disconnect();
@@ -102,6 +111,11 @@ namespace PlayerApp
         {
             switch (code)
             {
+                case MessageSigns.DisconnectMessage:
+                    {
+                        Disconnect();
+                        break;
+                    }
                 case MessageSigns.QuestionSign:
                     {
                         if (_finalStarted)
@@ -147,8 +161,7 @@ namespace PlayerApp
                         }
 
                         string betMessage = MessageSigns.AnswerMessage + _bet.ToString();
-                        byte[] data = Encoding.Unicode.GetBytes(betMessage);
-                        _stream.Write(data, 0, data.Length);
+                        SendMessage(betMessage);
                         _finalStarted = true;
                         break;
                     }
@@ -202,12 +215,16 @@ namespace PlayerApp
 
         private void BuzzButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_stream != null && _client != null)
-            {
-                byte[] data = Encoding.Unicode.GetBytes(MessageSigns.BuzzMessage);
+            SendMessage(MessageSigns.BuzzMessage);
+        }
+        private void SendMessage(string message)
+        {
+            try
+            { 
+                byte[] data = Encoding.Unicode.GetBytes(message);
                 _stream.Write(data, 0, data.Length);
             }
-            else
+            catch
             {
                 MessageTextbox.Text = _noConnectionMessage;
             }
@@ -215,6 +232,7 @@ namespace PlayerApp
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            SendMessage(MessageSigns.DisconnectMessage);
             Disconnect();
         }
     }

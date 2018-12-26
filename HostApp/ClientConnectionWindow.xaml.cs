@@ -73,7 +73,17 @@ namespace HostApp
 
         private void RemoveName(string id)
         {
-            _players.Remove(id);
+            if (_players.ContainsKey(id))
+            {
+                PlayersList.Dispatcher.Invoke(new Action<KeyValuePair<string, string>>(RemoveNameFromList), new KeyValuePair<string, string>(id, _players[id].Name));
+                _players.Remove(id);
+            }
+
+        }
+
+        private void RemoveNameFromList(KeyValuePair<string, string> pair)
+        {
+            PlayersList.Items.Remove(pair);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -87,8 +97,8 @@ namespace HostApp
             {
                 var item = PlayersList.SelectedItem;
                 string id = ((KeyValuePair<string, string>)item).Key;
+                _server.SendMessage(MessageSigns.DisconnectMessage, id);
                 _server.RemoveConnection(id);
-                PlayersList.Items.Remove(item);
             }
         }
 

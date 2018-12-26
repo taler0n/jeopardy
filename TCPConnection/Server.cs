@@ -49,6 +49,7 @@ namespace TCPConnection
 
         public void Listen()
         {
+            List<Thread> threads = new List<Thread>();
             try
             {
                 _listener = new TcpListener(IPAddress.Any, 8888);
@@ -59,12 +60,17 @@ namespace TCPConnection
                     TcpClient tcpClient = _listener.AcceptTcpClient();
                     ClientObject clientObject = new ClientObject(tcpClient, this);
                     Thread clientThread = new Thread(new ThreadStart(clientObject.Process));
+                    threads.Add(clientThread);
                     clientThread.Start();
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine(ex.Message);
+                foreach (var thread in threads)
+                {
+                    thread.Abort();
+                }
+
                 Disconnect();
             }
         }
@@ -125,10 +131,14 @@ namespace TCPConnection
         {
             _listener.Stop();
 
-            foreach (var client in clients)
+            try
             {
-                client.Value.Close();
+                foreach (var client in clients)
+                {
+                    client.Value.Close();
+                }
             }
+            catch { }
         }
     }
 }

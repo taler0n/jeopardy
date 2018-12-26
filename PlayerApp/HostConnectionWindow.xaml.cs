@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Net.Sockets;
-using TCPConnection;
+using Game;
 
 namespace PlayerApp
 {
@@ -69,31 +69,31 @@ namespace PlayerApp
 
         private void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!String.IsNullOrWhiteSpace(IPInput.Text) && !String.IsNullOrWhiteSpace(NameInput.Text))
+            if (!String.IsNullOrWhiteSpace(IPInput.Text) && !String.IsNullOrWhiteSpace(NameInput.Text) && (NameInput.Text.Length <= Player.MaxNameLength))
             {
                 UserName = NameInput.Text;
                 string host = IPInput.Text;
-                Client = new TcpClient();
-
+                
                 try
                 {
+                    Client = new TcpClient();
                     Client.Connect(host, port);
                     Stream = Client.GetStream();
                     byte[] data = Encoding.Unicode.GetBytes(UserName);
                     Stream.Write(data, 0, data.Length);
                     Close();
                 }
-                finally
-                { }
+                catch
+                {
+                    IPInput.Text = _ipPlaceholder;
+                    NameInput.Text = _namePlaceholder;
+                }
             }
-        }
-        
-        private void Disconnect()
-        {
-            if (Stream != null)
-                Stream.Close();
-            if (Client != null)
-                Client.Close();
+            else
+            {
+                IPInput.Text = _ipPlaceholder;
+                NameInput.Text = _namePlaceholder;
+            }
         }
     }
 }

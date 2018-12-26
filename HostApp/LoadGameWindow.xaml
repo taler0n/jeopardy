@@ -33,7 +33,7 @@
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="OpenFileButton" Grid.Column="1" Style="{StaticResource YellowContentStyle}" Content="Загрузить игру" Click="OpenFileButton_Click"/>
+            <Button x:Name="OpenFileButton" Grid.Column="1" Style="{StaticResource YellowContentStyle}" Content="Открыть файл" Click="OpenFileButton_Click"/>
         </Grid>
         <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>

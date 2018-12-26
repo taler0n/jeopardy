@@ -26,7 +26,7 @@ namespace HostApp
         private int _questionValue;
         private Dictionary<string, Player> _players;
         private Queue<string> _answerQueue;
-        private List<string> _failedPlayers;
+        private Dictionary<string, bool> _buzzedPlayers;
 
         public string NewActivePlayer;
 
@@ -41,15 +41,21 @@ namespace HostApp
             _players = players;
             NewActivePlayer = String.Empty;
             _answerQueue = new Queue<string>();
-            _failedPlayers = new List<string>();
+            _buzzedPlayers = new Dictionary<string, bool>();
+
+            foreach (var player in _players.Keys)
+            {
+                _buzzedPlayers.Add(player, false);
+            }
 
             _server.BroadcastMessage(MessageSigns.QuestionSign + _question.QuestionText);
         }
 
         public void PlayerBuzzedIn(string id)
         {
-            if (!_failedPlayers.Contains(id))
+            if (_buzzedPlayers[id] == false)
             {
+                _buzzedPlayers[id] = true;
                 _answerQueue.Enqueue(id);
                 AnswerQueueBox.Dispatcher.Invoke(new Action<string>(AddNameToList), _players[id].Name);
                 RightAnswerButton.Dispatcher.Invoke(new Action<Button>(ShowButton), RightAnswerButton);
@@ -82,7 +88,6 @@ namespace HostApp
             string id = _answerQueue.Dequeue();
             AnswerQueueBox.Items.RemoveAt(0);
             _players[id].Score -= _questionValue;
-            _failedPlayers.Add(id);
 
             if (_answerQueue.Count == 0)
             {
@@ -96,13 +101,18 @@ namespace HostApp
         private void SkipButton_Click(object sender, RoutedEventArgs e)
         {
             ShowAnswer();
-            _server.BroadcastMessage(MessageSigns.TimesUpMessage);
         }
 
         private void ShowAnswer()
         {
+            foreach (var player in _players.Keys)
+            {
+                _buzzedPlayers[player] = true;
+            }
+            _server.BroadcastMessage(MessageSigns.TimesUpMessage);
             QuestionLabel.Content = _question.AnswerText;
-            SkipButton.Content = "Выйти";
+            AnswerQueueBox.Items.Clear();
+            SkipButton.Content = "К выбору вопроса";
             SkipButton.RemoveHandler(Button.ClickEvent, (RoutedEventHandler)SkipButton_Click);
             SkipButton.AddHandler(Button.ClickEvent, new RoutedEventHandler(ExitButton_Click));
             RightAnswerButton.Visibility = Visibility.Hidden;

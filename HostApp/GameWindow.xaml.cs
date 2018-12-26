@@ -153,9 +153,7 @@ namespace HostApp
             int value = theme.GetQuestionValue(questionNumber);
 
             var questionWindow = new QuestionWindow(_server, theme[questionNumber], value, _players);
-            Visibility = Visibility.Hidden;
             questionWindow.ShowDialog();
-            Visibility = Visibility.Visible;
             button.Visibility = Visibility.Hidden;
             _questionsAnswered++;
 

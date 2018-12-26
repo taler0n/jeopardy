@@ -37,7 +37,7 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="BetInput" Grid.Column="1" Style="{StaticResource YellowContentStyle}" Foreground="White" GotFocus="BetInput_GotFocus" LostFocus="BetInput_LostFocus" TextWrapping="Wrap"/>
+            <TextBox x:Name="BetInput" Grid.Column="1" Style="{StaticResource YellowContentStyle}" Foreground="White" GotFocus="BetInput_GotFocus" LostFocus="BetInput_LostFocus" MaxLength="10" TextWrapping="Wrap"/>
         </Grid>
         <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>

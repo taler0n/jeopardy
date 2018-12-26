@@ -40,7 +40,11 @@ namespace TCPConnection
                     {
                         message = GetMessage();
 
-                        if (message == MessageSigns.BuzzMessage)
+                        if (message == MessageSigns.DisconnectMessage)
+                        {
+                            break;
+                        }
+                        else if (message == MessageSigns.BuzzMessage)
                         {
                             _server.ManageSignal(Id);
                         }
@@ -61,13 +65,8 @@ namespace TCPConnection
                     }
                 }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
             finally
             {
-                _server.RemoveConnection(this.Id);
                 Close();
             }
         }
@@ -89,6 +88,7 @@ namespace TCPConnection
         
         public void Close()
         {
+            _server.RemoveConnection(Id);
             if (Stream != null)
                 Stream.Close();
             if (_client != null)
