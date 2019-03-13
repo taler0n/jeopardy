@@ -1,23 +1,21 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Game
 {
     public class GameObject
     {
-        public const int DefaultNumberOfPlayers = 3;
-
+        public Settings Settings { get; set; }
         public List<Round> Rounds { get; set; }
         public FinalRound Final { get; set; }
 
         public GameObject()
+        { }
+
+        public GameObject(Settings settings)
         {
+            Settings = settings;
             Rounds = new List<Round>();
-            Final = new FinalRound();
+            Final = new FinalRound(Settings);
         }
 
         public bool IsReady()

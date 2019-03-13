@@ -1,16 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Game;
 using TCPConnection;
 
@@ -25,17 +16,19 @@ namespace HostApp
 
         private Server _server;
         private FinalRound _final;
+        private Settings _settings;
         private Dictionary<string, Player> _players;
         private Dictionary<string, int> _bets;
         private bool _canStart;
         private List<Button> _questionButtons;
 
-        public FinalRoundWindow(Server server, FinalRound final, Dictionary<string, Player> players)
+        public FinalRoundWindow(Server server, FinalRound final, Settings settings, Dictionary<string, Player> players)
         {
             InitializeComponent();
             _server = server;
             _server.SetMessageManager(new Action<string, string>(ManageBet));
             _final = final;
+            _settings = settings;
             _players = players;
             _bets = new Dictionary<string, int>();
             _canStart = false;
@@ -67,13 +60,13 @@ namespace HostApp
 
         private void DrawQuestionGrid()
         {
-            for (int i = 0; i < FinalRound.DefaultSize; i++)
+            for (int i = 0; i < _settings.FinalSize.Value; i++)
             {
                 RowDefinition row = new RowDefinition();
                 QuestionGrid.RowDefinitions.Add(row);
             }
 
-            for (int i = 0; i < FinalRound.DefaultSize; i++)
+            for (int i = 0; i < _settings.FinalSize.Value; i++)
             {
                 Button question = new Button();
                 question.Name = String.Format("QuestionButton_{0}", i);
@@ -107,7 +100,7 @@ namespace HostApp
 
                 if (buttonsAvailable == 1)
                 {
-                    var finalQuestionWindow = new FinalQuestionWindow(_server, lastQuestion, _players, _bets);
+                    var finalQuestionWindow = new FinalQuestionWindow(_server, lastQuestion, _settings, _players, _bets);
                     Visibility = Visibility.Hidden;
                     finalQuestionWindow.ShowDialog();
                     Close();

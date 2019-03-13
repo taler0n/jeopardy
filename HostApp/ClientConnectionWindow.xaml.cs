@@ -1,16 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using TCPConnection;
 using Game;
 
@@ -104,18 +95,18 @@ namespace HostApp
 
         private void ContinueButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_players.Count == GameObject.DefaultNumberOfPlayers)
+            if (_players.Count == _game.Settings.NumberOfPlayers.Value)
             {
                 _gameStarted = true;
                 Visibility = Visibility.Hidden;
 
                 foreach (var round in _game.Rounds)
                 {
-                    var roundWindow = new GameWindow(_server, round, _players);
+                    var roundWindow = new GameWindow(_server, round, _game.Settings, _players);
                     roundWindow.ShowDialog();
                 }
 
-                var final = new FinalRoundWindow(_server, _game.Final, _players);
+                var final = new FinalRoundWindow(_server, _game.Final, _game.Settings, _players);
                 final.ShowDialog();
                 Close();
             }

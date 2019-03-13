@@ -1,0 +1,67 @@
+﻿<Window x:Class="Creator.SettingsWindow"
+        Background="DarkSlateGray"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Creator"
+        mc:Ignorable="d"
+        Title="Settings" Height="450" Width="800" Icon="icon.ico">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="11*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="ExitButton" Grid.Column="0" Style="{StaticResource YellowContentStyle}" Content="Отмена" Click="ExitButton_Click"/>
+            <Button x:Name="SaveButton" Grid.Column="2" Style="{StaticResource YellowContentStyle}" Content="Сохранить" Click="SaveButton_Click"/>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource YellowContentStyle}" Content="Цена первого вопроса:" BorderThickness="0" HorizontalContentAlignment="Right" Grid.ColumnSpan="2"/>
+            <Label Grid.Column="0" Grid.Row="2" Style="{StaticResource YellowContentStyle}" Content="Шаг между вопросами:" BorderThickness="0" HorizontalContentAlignment="Right" Grid.ColumnSpan="2"/>
+            <Label Grid.Column="0" Grid.Row="4" Style="{StaticResource YellowContentStyle}" Content="Макс. длина имени темы:" BorderThickness="0" HorizontalContentAlignment="Right" Grid.ColumnSpan="2"/>
+            <Label Grid.Column="0" Grid.Row="6" Style="{StaticResource YellowContentStyle}" Content="Макс. длина текста вопроса:" BorderThickness="0" HorizontalContentAlignment="Right" Grid.ColumnSpan="2"/>
+
+            <TextBox x:Name="Box_FirstQuestionValue" Grid.Column="2" Grid.Row="0" Style="{StaticResource YellowContentStyle}" Foreground="White" LostFocus="Box_SettingValue_LostFocus"/>
+            <TextBox x:Name="Box_QuestionStepValue" Grid.Column="2" Grid.Row="2" Style="{StaticResource YellowContentStyle}" Foreground="White" LostFocus="Box_SettingValue_LostFocus"/>
+            <TextBox x:Name="Box_MaxThemeNameLength" Grid.Column="2" Grid.Row="4" Style="{StaticResource YellowContentStyle}" Foreground="White" LostFocus="Box_SettingValue_LostFocus"/>
+            <TextBox x:Name="Box_MaxQuestionTextLength" Grid.Column="2" Grid.Row="6" Style="{StaticResource YellowContentStyle}" Foreground="White" LostFocus="Box_SettingValue_LostFocus"/>
+
+            <Label Grid.Column="3" Grid.Row="0" Style="{StaticResource YellowContentStyle}" Content="Количество игроков:" BorderThickness="0" HorizontalContentAlignment="Right"/>
+            <Label Grid.Column="3" Grid.Row="2" Style="{StaticResource YellowContentStyle}" Content="Тем в финале:" BorderThickness="0" HorizontalContentAlignment="Right"/>
+            <Label Grid.Column="3" Grid.Row="4" Style="{StaticResource YellowContentStyle}" Content="Тем в раунде:" BorderThickness="0" HorizontalContentAlignment="Right"/>
+            <Label Grid.Column="3" Grid.Row="6" Style="{StaticResource YellowContentStyle}" Content="Вопросов в теме:" BorderThickness="0" HorizontalContentAlignment="Right"/>
+
+            <TextBox x:Name="Box_NumberOfPlayers" Grid.Column="4" Grid.Row="0" Style="{StaticResource YellowContentStyle}" Foreground="White" LostFocus="Box_SettingValue_LostFocus"/>
+            <TextBox x:Name="Box_FinalSize" Grid.Column="4" Grid.Row="2" Style="{StaticResource YellowContentStyle}" Foreground="White" LostFocus="Box_SettingValue_LostFocus"/>
+            <TextBox x:Name="Box_RoundSize" Grid.Column="4" Grid.Row="4" Style="{StaticResource YellowContentStyle}" Foreground="White" LostFocus="Box_SettingValue_LostFocus"/>
+            <TextBox x:Name="Box_ThemeSize" Grid.Column="4" Grid.Row="6" Style="{StaticResource YellowContentStyle}" Foreground="White" LostFocus="Box_SettingValue_LostFocus"/>
+        </Grid>
+    </Grid>
+</Window>

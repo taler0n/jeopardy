@@ -1,0 +1,21 @@
+﻿<Window x:Class="Creator.GameCreator"
+        Background="DarkSlateGray"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Closing="Window_Closing"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Creator"
+        mc:Ignorable="d"
+        Title="Своя Игра: Редактор" Height="478.724" Width="662.766" Icon="icon.ico">
+    <Grid>
+        <ListBox x:Name="RoundBox" Style="{StaticResource YellowContentStyle}" HorizontalAlignment="Left" Height="370" Margin="29,29,0,49" VerticalAlignment="Center" Width="220"/>
+        <Button x:Name="AddButton" Style="{StaticResource YellowContentStyle}" Content="Создать раунд" HorizontalAlignment="Left" Margin="308,29,0,0" VerticalAlignment="Top" Width="290" Height="70" Click="AddButton_Click"/>
+        <Button x:Name="EditButton" Style="{StaticResource YellowContentStyle}" Content="Редактировать раунд" HorizontalAlignment="Left" Margin="308,104,0,0" VerticalAlignment="Top" Width="290" Height="70" Click="EditButton_Click"/>
+        <Button x:Name="DeleteButton" Style="{StaticResource YellowContentStyle}" Content="Удалить раунд" HorizontalAlignment="Left" Margin="308,180,0,0" VerticalAlignment="Top" Width="290" Height="70" Click="DeleteButton_Click"/>
+        <Button x:Name="EditFinalButton" Style="{StaticResource YellowContentStyle}" Content="Редактировать финал" HorizontalAlignment="Left" Margin="308,255,0,0" VerticalAlignment="Top" Width="290" Height="70" Click="EditFinalButton_Click"/>
+        <Button x:Name="SaveButton" Style="{StaticResource YellowContentStyle}" Content="Сохранить игру" HorizontalAlignment="Left" Margin="308,357,0,0" VerticalAlignment="Top" Width="290" Height="70" Click="SaveButton_Click"/>
+    </Grid>
+</Window>

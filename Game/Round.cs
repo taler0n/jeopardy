@@ -1,20 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Game
 {
     public class Round
     {
-        public const int DefaultSize = 6;
-
         public Theme[] Themes { get; set; }
 
         public Round()
+        { }
+
+        public Round(Settings settings)
         {
-            Themes = new Theme[DefaultSize];
+            Themes = new Theme[settings.RoundSize.Value];
+
+            for (int i = 0; i < settings.RoundSize.Value; i++)
+            {
+                Themes[i] = new Theme(settings);
+
+                for (int j = 0; j < settings.ThemeSize.Value; j++)
+                {
+                    Themes[i][j] = new Question();
+                }
+            }
         }
 
         public Theme this[int index]

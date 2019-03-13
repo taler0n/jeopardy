@@ -1,16 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Game;
 using Microsoft.Win32;
 using System.Xml.Serialization;
@@ -37,34 +26,37 @@ namespace HostApp
         private void OpenFileButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog();
+            dialog.InitialDirectory = Directory.GetCurrentDirectory();
             dialog.Filter = "XML-файлы|*.xml";
             dialog.CheckFileExists = true;
             if (dialog.ShowDialog() == true)
             {
                 var downloader = new XmlSerializer(typeof(GameObject));
-                var reader = new StreamReader(dialog.FileName);
-
-                try
+                using (var reader = new StreamReader(dialog.FileName))
                 {
-                    GameObject newGame = (GameObject)downloader.Deserialize(reader);
 
-                    if (newGame.IsReady())
+                    try
                     {
-                        _createdGame = newGame;
-                        FileLabel.Visibility = Visibility.Visible;
-                        FileNameLabel.Visibility = Visibility.Visible;
-                        FileNameLabel.Content = dialog.SafeFileName;
-                        ContinueButton.Visibility = Visibility.Visible;
-                        StatusBar.Content = _ready;
+                        GameObject newGame = (GameObject)downloader.Deserialize(reader);
+
+                        if (newGame.IsReady())
+                        {
+                            _createdGame = newGame;
+                            FileLabel.Visibility = Visibility.Visible;
+                            FileNameLabel.Visibility = Visibility.Visible;
+                            FileNameLabel.Content = dialog.SafeFileName;
+                            ContinueButton.Visibility = Visibility.Visible;
+                            StatusBar.Content = _ready;
+                        }
+                        else
+                        {
+                            StatusBar.Content = _unableToStartGame;
+                        }
                     }
-                    else
+                    catch (Exception)
                     {
-                        StatusBar.Content = _unableToStartGame;
+                        StatusBar.Content = _loadedBadFile;
                     }
-                }
-                catch (Exception exception)
-                {
-                    StatusBar.Content = _loadedBadFile;
                 }
             }
         }

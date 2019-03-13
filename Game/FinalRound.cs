@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Game
 {
     public class FinalRound
     {
-        public const int DefaultSize = 7;
-
         public FinalQuestion[] Questions { get; set; }
-
+        
         public FinalRound()
+        { }
+
+        public FinalRound(Settings settings)
         {
-            Questions = new FinalQuestion[DefaultSize];
+            Questions = new FinalQuestion[settings.FinalSize.Value];
+
+            for (int i = 0; i < settings.FinalSize.Value; i++)
+            {
+                Questions[i] = new FinalQuestion();
+            }
         }
 
         public FinalQuestion this[int index]
@@ -27,7 +28,7 @@ namespace Game
         {
             foreach (var item in Questions)
             {
-                if (item == null)
+                if (item == null || !item.IsReady())
                 {
                     return false;
                 }

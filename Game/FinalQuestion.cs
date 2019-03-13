@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Game
 {
     public class FinalQuestion : Question
     {
+        private const string _defaultName = "имя_вопроса";
         public string Name { get; set; }
 
         public FinalQuestion()
         {
-
-        }
-
-        public FinalQuestion(string name, string question, string answer) : base(question, answer)
-        {
-            Name = name;
+            Name = _defaultName;
         }
     }
 }

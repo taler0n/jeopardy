@@ -1,44 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Game
 {
     public class Theme
     {
-        private const int _defaultFirstQuestionValue = 100;
-        private const int _defaultQuestionValueStep = 100;
-        public const int DefaultSize = 5;
+        private const string _defaultName = "имя_темы";
 
         public string Name { get; set; }
         public Question[] Questions { get; set; }
         public int[] QuestionValues { get; set; }
 
         public Theme()
+        { }
+
+        public Theme(Settings settings)
         {
-            Name = String.Empty;
-            Questions = new Question[DefaultSize];
-            QuestionValues = new int[DefaultSize];
+            Name = _defaultName;
+            Questions = new Question[settings.ThemeSize.Value];
+            QuestionValues = new int[settings.ThemeSize.Value];
 
-            int currentValue = _defaultFirstQuestionValue;
+            int currentValue = settings.FirstQuestionValue.Value;
 
-            for (int i = 0; i < DefaultSize; i++)
+            for (int i = 0; i < settings.ThemeSize.Value; i++)
             {
                 QuestionValues[i] = currentValue;
-                currentValue += _defaultQuestionValueStep;
+                currentValue += settings.QuestionStepValue.Value;
             }
         }
 
-        public void SetMultiplier(int pointMultiplier)
+        public void SetMultiplier(int pointMultiplier, Settings settings)
         {
-            int currentValue = _defaultFirstQuestionValue * pointMultiplier;
+            int currentValue = settings.FirstQuestionValue.Value * pointMultiplier;
 
-            for (int i = 0; i < DefaultSize; i++)
+            for (int i = 0; i < settings.ThemeSize.Value; i++)
             {
                 QuestionValues[i] = currentValue;
-                currentValue += _defaultQuestionValueStep * pointMultiplier;
+                currentValue += settings.FirstQuestionValue.Value * pointMultiplier;
             }
         }
 
@@ -55,20 +51,15 @@ namespace Game
 
         public bool IsReady()
         {
-            if (Name != String.Empty)
+            foreach (var item in Questions)
             {
-                foreach (var item in Questions)
+                if (item == null || !item.IsReady())
                 {
-                    if (item == null)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
-
-                return true;
             }
 
-            return false;
+            return true;
         }
     }
 }

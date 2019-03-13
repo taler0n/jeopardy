@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Net.Sockets;
-using Game;
 
 namespace PlayerApp
 {
@@ -23,7 +13,8 @@ namespace PlayerApp
     {
         private const string _ipPlaceholder = "Введите IP адрес...";
         private const string _namePlaceholder = "Введите имя...";
-        private const int port = 8888;
+        private const int _port = 8888;
+        private const int _maxNameLength = 12;
 
         public TcpClient Client;
         public NetworkStream Stream;
@@ -69,7 +60,7 @@ namespace PlayerApp
 
         private void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!String.IsNullOrWhiteSpace(IPInput.Text) && !String.IsNullOrWhiteSpace(NameInput.Text) && (NameInput.Text.Length <= Player.MaxNameLength))
+            if (!String.IsNullOrWhiteSpace(IPInput.Text) && !String.IsNullOrWhiteSpace(NameInput.Text) && (NameInput.Text.Length <= _maxNameLength))
             {
                 UserName = NameInput.Text;
                 string host = IPInput.Text;
@@ -77,7 +68,7 @@ namespace PlayerApp
                 try
                 {
                     Client = new TcpClient();
-                    Client.Connect(host, port);
+                    Client.Connect(host, _port);
                     Stream = Client.GetStream();
                     byte[] data = Encoding.Unicode.GetBytes(UserName);
                     Stream.Write(data, 0, data.Length);

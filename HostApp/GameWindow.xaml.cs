@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Game;
 using TCPConnection;
 
@@ -25,17 +18,19 @@ namespace HostApp
 
         private Server _server;
         private Round _round;
+        private Settings _settings;
         private Dictionary<string, Player> _players;
         private Dictionary<string, Label> _nameLabels;
         private Dictionary<string, TextBox> _scoreBoxes;
         private string _activePlayer;
         private int _questionsAnswered;
 
-        public GameWindow(Server server, Round round, Dictionary<string, Player> players)
+        public GameWindow(Server server, Round round, Settings settings, Dictionary<string, Player> players)
         {
             InitializeComponent();
             _server = server;
             _round = round;
+            _settings = settings;
             _players = players;
             _nameLabels = new Dictionary<string, Label>();
             _scoreBoxes = new Dictionary<string, TextBox>();
@@ -61,7 +56,7 @@ namespace HostApp
             column0.Width = new GridLength(1, GridUnitType.Star);
             PlayersGrid.ColumnDefinitions.Add(column0);
 
-            for (int i = 0; i < GameObject.DefaultNumberOfPlayers; i++)
+            for (int i = 0; i < _settings.NumberOfPlayers.Value; i++)
             {
                 ColumnDefinition playerColumn = new ColumnDefinition();
                 playerColumn.Width = new GridLength(4, GridUnitType.Star);
@@ -100,7 +95,7 @@ namespace HostApp
 
         private void DrawQuestionGrid()
         {
-            for (int i = 0; i < Round.DefaultSize; i++)
+            for (int i = 0; i < _settings.RoundSize.Value; i++)
             {
                 RowDefinition row = new RowDefinition();
                 QuestionGrid.RowDefinitions.Add(row);
@@ -110,14 +105,14 @@ namespace HostApp
             namesColumn.Width = new GridLength(2, GridUnitType.Star);
             QuestionGrid.ColumnDefinitions.Add(namesColumn);
 
-            for (int i = 0; i < Theme.DefaultSize; i++)
+            for (int i = 0; i < _settings.ThemeSize.Value; i++)
             {
                 ColumnDefinition column = new ColumnDefinition();
                 column.Width = new GridLength(1, GridUnitType.Star);
                 QuestionGrid.ColumnDefinitions.Add(column);
             }
 
-            for (int i = 0; i < Round.DefaultSize; i++)
+            for (int i = 0; i < _settings.RoundSize.Value; i++)
             {
                 Label themeName = new Label();
                 themeName.Style = (Style)FindResource(_styleName);
@@ -127,9 +122,9 @@ namespace HostApp
                 QuestionGrid.Children.Add(themeName);
             }
 
-            for (int i = 0; i < Round.DefaultSize; i++)
+            for (int i = 0; i < _settings.RoundSize.Value; i++)
             {
-                for (int j = 0; j < Theme.DefaultSize; j++)
+                for (int j = 0; j < _settings.ThemeSize.Value; j++)
                 {
                     Button question = new Button();
                     question.Name = String.Format("QuestionButton_{0}_{1}", i, j);
@@ -162,7 +157,7 @@ namespace HostApp
                 _activePlayer = questionWindow.NewActivePlayer;
             }
 
-            if (_questionsAnswered == Round.DefaultSize * Theme.DefaultSize)
+            if (_questionsAnswered == _settings.RoundSize.Value * _settings.ThemeSize.Value)
             {
                 Close();
             }

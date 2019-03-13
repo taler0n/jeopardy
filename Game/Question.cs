@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game
 {
@@ -13,13 +9,13 @@ namespace Game
 
         public Question()
         {
-
+            QuestionText = String.Empty;
+            AnswerText = String.Empty;
         }
 
-        public Question(string question, string answer)
+        public bool IsReady()
         {
-            QuestionText = question;
-            AnswerText = answer;
+            return (QuestionText != String.Empty && AnswerText != String.Empty);
         }
     }
 }

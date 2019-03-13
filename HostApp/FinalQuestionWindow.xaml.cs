@@ -1,16 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Game;
 using TCPConnection;
 
@@ -108,18 +99,20 @@ namespace HostApp
 
         private Server _server;
         private FinalQuestion _question;
+        private Settings _settings;
         private Dictionary<string, Player> _players;
         private Dictionary<string, int> _bets;
         private Dictionary<string, string> _answers;
         private Dictionary<string, PlayerHUD> _huds;
         private Dictionary<Button, string> _idFromButtons;
 
-        public FinalQuestionWindow(Server server, FinalQuestion question, Dictionary<string, Player> players, Dictionary<string, int> bets)
+        public FinalQuestionWindow(Server server, FinalQuestion question, Settings settings, Dictionary<string, Player> players, Dictionary<string, int> bets)
         {
             InitializeComponent();
             _server = server;
             _server.SetMessageManager(new Action<string, string>(ManageAnswer));
             _question = question;
+            _settings = settings;
             _players = players;
             _bets = bets;
             _answers = new Dictionary<string, string>();
@@ -153,7 +146,7 @@ namespace HostApp
             column0.Width = new GridLength(_divisionColumnWidth, GridUnitType.Star);
             PlayersGrid.ColumnDefinitions.Add(column0);
 
-            for (int i = 0; i < GameObject.DefaultNumberOfPlayers; i++)
+            for (int i = 0; i < _settings.NumberOfPlayers.Value; i++)
             {
                 ColumnDefinition playerColumn = new ColumnDefinition();
                 playerColumn.Width = new GridLength(_playerColumnWidth, GridUnitType.Star);
